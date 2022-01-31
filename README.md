@@ -42,7 +42,7 @@
 
 ## API'S
 
-* <b>App meta data API: </b> https://42matters.com/app-market-data
+* <b>  </b>
 
 ---
 ## Technologies
