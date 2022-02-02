@@ -1,0 +1,84 @@
+:root {
+    --primary-color: rgb(149, 175, 235);
+    --secondary-color: rgb(30, 45, 138);
+    --tertiary-color: rgb(113, 121, 186);
+    }
+.content {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.page-header {
+    padding: 10px;
+    text-shadow: 0px 0px 10px black;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    margin-bottom: 20px;
+    color:white;
+}
+.city-container {
+    padding: 10px 10px;
+    margin-left: 30px;
+    border: 2px double black;
+    border-radius: 10px;
+}
+.conditions {
+    margin: 15px 20px 15px 0;
+}
+#city-search-input {
+    background-color: white;
+}
+#city-search-submit {
+    background-color: var(--primary-color);
+    color: white;
+}
+.current-weather {
+    padding: 10px 25px;
+    border: 2px solid black;
+    border-radius: 7px;
+    font-weight: bold;
+    /* background-color: linear-gradient(var(--primary-color), white); */
+    background-color: rgba(149, 175, 235, .5);
+}
+.current-weather h2 {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+.city-form {
+    padding-bottom: 25px;
+    border-bottom: 2px solid black;
+}
+.form-label {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+.app-title {
+    font-weight: bold;
+    font-size: 3.0;
+}
+.extended-forecast h3 {
+    padding: 5px 5px;
+
+}
+.day-card-container {
+    display: flex;
+    justify-content: space-between;
+}
+.day-card-container h3 {
+    width: 100%;
+}
+.day-card {
+    flex:1;
+    width: 20%;
+    background-color: var(--tertiary-color);
+    margin: 0 5px;
+    border-radius: 7px;
+    color: white;
+    padding: 5px;
+}
+.day-card h4 {
+margin-bottom: 15px;
+text-shadow: 0px 0px 5px black;
+}
+.current-conditions-icon {
+    height: 150px;
+    width: 150px;
+}
