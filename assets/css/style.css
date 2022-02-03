@@ -67,6 +67,9 @@ ul {
     text-align: center;
     border-radius: 5px;
 }
+#currentUv {
+    padding: 3px 15px;
+}
 .app-title {
     font-weight: bold;
     font-size: 3.0;
