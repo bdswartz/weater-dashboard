@@ -1,4 +1,4 @@
-# Welcome to the Weather Dashboard
+# [Welcome to the Weather Dashboard](https://bdswartz.github.io/weather-dashboard/)
 
 #### Weather Dashboard provides a quick snapshot of the weather in up to 10 cities across the US
 ---
