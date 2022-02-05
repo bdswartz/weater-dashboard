@@ -68,8 +68,6 @@ var getCity = function() {
     }
     else {
         var apiCityUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + userInput + "&limit=5&appid=" + apiKey;
-        console.log(userInput);
-        console.log(apiCityUrl);
         fetch(apiCityUrl).then(function(response) {
             // request was successful
             if (response.ok) {
@@ -120,9 +118,7 @@ var getWeatherData = function(cityObj) {
   };
 
 var displayCurrentWeather = function(weatherData,city) {
-    console.log(city.Name);
     mainContentEl.innerHTML = "";
-    console.log(weatherData);
     // Build current weather conditions icon request url
     var currentWeatherContainerEl = document.createElement("div");
     currentWeatherContainerEl.className = "current-weather";
@@ -208,7 +204,6 @@ var updateCityHistory = function (cityHistoryObj) {
     // clear old list out of container
     cityListEl.innerHTML = "";
     for (index=0 ; index<cityHistoryObj.length ; index++) {
-        console.log()
         if (cityHistoryObj[index].Name) {
         var cityHistoryItemEl = document.createElement("li")
         cityHistoryItemEl.className = "city-item"
@@ -237,7 +232,6 @@ var dateConvert = function(date) {
 function isValidUSZip(zipCode) {
     return /^\d{5}(-\d{4})?$/.test(zipCode);
  }
-
 
   document.querySelector(".city-form").addEventListener("submit", getCity);
   document.querySelector(".city-list").addEventListener("click", function(event) {

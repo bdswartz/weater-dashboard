@@ -62,13 +62,21 @@ Weather Dashboard is designed to be a quick and easy way to find the current wea
 *  Ability to perform a more accurate search using a standard or extended US zip code as well as directly entering the city name.
 *  Storage of city searches in the clients browser so that the user can draw on their search history for their next weather update.
 *  Ability for the user to choose from the city search history list and initiate a new weather conditions request by clicking on that city in the list.
+*  Once a user has searched before, the last city that was searched is preserved in memory and brought up upon subsequent opening of the Weather Dashboard.
 *  Refreshing the search history list every time a city is chosen to keep frequent user searches toward the top of the list.
 *  Graphical representation of the current and forecast conditions in a city through use of dynamic icons based on current and forecast weather conditions.
 *  Color coded graphical representation of the current ultraviolet index risk based on US EPA warning levels.
 
+---
+
 ![Landing Screen - Search Only!](./assets/images/landing-ss.jpg "Landing Screen")
 
+Screen shot of the landing screen of the application when no search history .  Search is the only information that exists if no previous search has been performed by the user.
+
+
 ![Search Results - With Clickable Search History!](./assets/images/results-ss.jpg "Weather Search Results")
+
+Once a city name or zip code is entered, the results are dynamically generated, saved in local storage and used during subsequent browser sessions.
 ---
 <!-- 
 ## Resource Links
