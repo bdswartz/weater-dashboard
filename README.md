@@ -4,7 +4,7 @@
 ---
 
 #### Collaborators:
-* [Brian Swartz] https://github.com/bdswartz
+* [Brian Swartz](https://github.com/bdswartz)
 
 <!-- ---
 

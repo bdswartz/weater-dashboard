@@ -37,7 +37,7 @@ var getCity = function() {
     var userInput = document.querySelector("#city-search-input").value;
     document.querySelector("#city-search-input").value = "";
     if (isValidUSZip(userInput)) {
-    apiZipUrl = "http://api.openweathermap.org/geo/1.0/zip?zip=" + userInput + ",US&appid=" + apiKey;
+    apiZipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + userInput + ",US&appid=" + apiKey;
     fetch(apiZipUrl).then(function(response) {
         // request was successful
         if (response.ok) {
@@ -67,7 +67,7 @@ var getCity = function() {
         });
     }
     else {
-        var apiCityUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + userInput + "&limit=5&appid=" + apiKey;
+        var apiCityUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + userInput + "&limit=5&appid=" + apiKey;
         console.log(userInput);
         console.log(apiCityUrl);
         fetch(apiCityUrl).then(function(response) {
@@ -133,7 +133,7 @@ var displayCurrentWeather = function(weatherData,city) {
     var currentDateEl = document.createElement("h3");
     currentDateEl.textContent = date.Month + " " + date.Date + ", " + date.Year;
     var currentWeatherIcon = document.createElement("img");
-    iconApiUrl = "http://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png";
+    iconApiUrl = "https://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png";
     // Create icon and update weather data display element
     currentWeatherIcon.src = iconApiUrl;
     var currentTempEl = document.createElement("p");
@@ -176,7 +176,7 @@ var buildForecast = function(data) {
     extendedForecastEl.append(fiveDayHeaderEl,dayCardContainerEl);
     mainContentEl.appendChild(extendedForecastEl);
     for (var index = 1; index<6; index++) {
-        iconApiUrl = "http://openweathermap.org/img/wn/" + data.daily[index].weather[0].icon + "@2x.png";
+        iconApiUrl = "https://openweathermap.org/img/wn/" + data.daily[index].weather[0].icon + "@2x.png";
         // Create the elements for the weather card
         var date = dateConvert(data.daily[index].dt);
         var forecastCardEl = document.createElement("div");
