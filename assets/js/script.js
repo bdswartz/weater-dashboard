@@ -35,6 +35,7 @@ var uponLoad = function() {
 var getCity = function() {
     event.preventDefault();
     var userInput = document.querySelector("#city-search-input").value;
+    document.querySelector("#city-search-input").value = "";
     if (isValidUSZip(userInput)) {
     apiZipUrl = "http://api.openweathermap.org/geo/1.0/zip?zip=" + userInput + ",US&appid=" + apiKey;
     fetch(apiZipUrl).then(function(response) {
@@ -207,6 +208,8 @@ var updateCityHistory = function (cityHistoryObj) {
     // clear old list out of container
     cityListEl.innerHTML = "";
     for (index=0 ; index<cityHistoryObj.length ; index++) {
+        console.log()
+        if (cityHistoryObj[index].Name) {
         var cityHistoryItemEl = document.createElement("li")
         cityHistoryItemEl.className = "city-item"
         var cityHistoryBtnEl = document.createElement("button")
@@ -215,6 +218,7 @@ var updateCityHistory = function (cityHistoryObj) {
         cityHistoryBtnEl.className = "city-button"
         cityHistoryItemEl.appendChild(cityHistoryBtnEl);
         cityListEl.appendChild(cityHistoryItemEl);
+        };
     }
 };
 

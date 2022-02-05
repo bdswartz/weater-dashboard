@@ -4,7 +4,7 @@
 ---
 
 #### Collaborators:
-* [Brian Swartz](https://github.com/JAE-S) 
+* [Brian Swartz] https://github.com/bdswartz
 
 <!-- ---
 
@@ -42,7 +42,7 @@
 
 ## API'S
 
-* <b>  </b>
+* <b>Open Weather</b> - https://openweathermap.org/
 
 ---
 ## Technologies
@@ -51,15 +51,24 @@
   * JavaScript
   * CSS
   * HTML
+  * Bootstrap
  
 ---
 
 ## Features And Functionality
+Weather Dashboard is designed to be a quick and easy way to find the current weather conditions in a city and give the user a 5-day look ahead at the weather for that city. Features that are included in the Weather Dashboard include the following:
+     *  Ability to perform a more accurate search using a standard or extended US zip code as well as directly entering the city name.
+     *  Storage of city searches in the clients browser so that the user can draw on their search history for their next weather update.
+     *  Ability for the user to choose from the city search history list and initiate a new weather conditions request by clicking on that city in the list.
+     *  Refreshing the search history list every time a city is chosen to keep frequent user searches toward the top of the list.
+     *  Graphical representation of the current and forecast conditions in a city through use of dynamic icons based on current and forecast weather conditions.
+     *  Color coded graphical representation of the current ultraviolet index risk based on US EPA warning levels.
+
 
 ---
-
+<!-- 
 ## Resource Links
 
   * <b>API access to Mobile Data:
   
----
+--- -->
