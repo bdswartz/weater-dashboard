@@ -66,7 +66,9 @@ Weather Dashboard is designed to be a quick and easy way to find the current wea
 *  Graphical representation of the current and forecast conditions in a city through use of dynamic icons based on current and forecast weather conditions.
 *  Color coded graphical representation of the current ultraviolet index risk based on US EPA warning levels.
 
+![Landing Screen - Search Only!](./assets/images/landing-ss.jpg "Landing Screen")
 
+![Search Results - With Clickable Search History!](./assets/images/results-ss.jpg "Weather Search Results")
 ---
 <!-- 
 ## Resource Links
