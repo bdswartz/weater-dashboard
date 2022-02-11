@@ -10,22 +10,22 @@
     <script src="https://kit.fontawesome.com/44b68844f6.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header class="page-header w-100">
+    <header class="page-header">
         <h1 class="app-title text-center">Weather Dashboard</h1>
       </header>
-    <div class="row gx-5">
-        <div class="city-container col-3">
-            <form class="w-100 city-form">
-                <label class="w-100 form-label" for="city-input">Search for a City:</label>
-                <input id="city-search-input" class="w-100 form-control-lg mt-3" type="text" placeholder="City Name or US Zip Code"/>
-                <button id="city-search-submit" class="w-100 form-control-lg mt-3" type="submit">Search</button>
+    <div class="content-container">
+        <div class="city-container">
+            <form class="city-form">
+                <label id="city-search-label" for="city-input">Search for a City:</label>
+                <input id="city-search-input" type="text" placeholder="City Name or US Zip Code"/>
+                <button id="city-search-submit" type="submit">Search</button>
             </form>
             <ul class="city-list">
 
             </ul>
         </div>
 
-        <main class="col-8 weather-data">
+        <main class="weather-data">
 
         </main>
     </div>
