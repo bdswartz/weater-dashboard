@@ -29,6 +29,11 @@ var uponLoad = function() {
     // if no local storage, need to get user input right away
     cityHistoryObj = JSON.parse(localStorage.getItem("cityhistory"));
     updateCityHistory(cityHistoryObj);
+    // if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(showPosition);
+    //   } else {
+    //     x.innerHTML = "Geolocation is not supported by this browser.";
+    //   }
     getWeatherData(cityHistoryObj[0]);
 }
 
@@ -121,6 +126,12 @@ var displayCurrentWeather = function(weatherData,city) {
     mainContentEl.innerHTML = "";
     // Build current weather conditions icon request url
     var currentWeatherContainerEl = document.createElement("div");
+    var currentWeatherHalContainerEl = document.createElement("div")
+    currentWeatherHalContainerEl.className = "half-container"
+    var currentWeatherHalf1El = document.createElement("div");
+    currentWeatherHalf1El.className = "current-half";
+    var currentWeatherHalf2El = document.createElement("div");
+    currentWeatherHalf2El.className = "current-half";
     currentWeatherContainerEl.className = "current-weather";
     var currentCityEl = document.createElement("h2");
     currentCityEl.className = "city-display";
@@ -133,15 +144,24 @@ var displayCurrentWeather = function(weatherData,city) {
     // Create icon and update weather data display element
     currentWeatherIcon.src = iconApiUrl;
     var currentTempEl = document.createElement("p");
-    currentTempEl.textContent = "Temp:  " + weatherData.current.temp + " F";
+    currentTempEl.className = "current-data"
+    // currentTempEl.textContent = "Temp:  " + weatherData.current.temp + " F";
+    currentTempEl.innerHTML = "<span>Temp:  </span><span id='currentTemp'>" + weatherData.current.temp + " F</span>";
     var currentWindEl = document.createElement("p");
-    currentWindEl.textContent = "Wind:  " + weatherData.current.wind_speed + " mph";
+    // currentWindEl.textContent = "Wind:  " + weatherData.current.wind_speed + " mph";
+    currentWindEl.innerHTML = "<span>Wind:  </span><span id='currentWind'>" + weatherData.current.wind_speed + " mph</span>";
     var currentHumidityEl = document.createElement("p");
-    currentHumidityEl.textContent = "Humidity:  " + weatherData.current.humidity + " %";
+    // currentHumidityEl.textContent = "Humidity:  " + weatherData.current.humidity + " %";
+    currentHumidityEl.innerHTML = "<span>Humidity:  </span><span id='currentHumid'>" + weatherData.current.humidity + " %</span>";
     var currentUviEl = document.createElement("div");
     uviNum = parseFloat(weatherData.current.uvi);
     currentUviEl.innerHTML = "<span>UV Index:  </span><span id='currentUv'>" + uviNum + "</span>";
-    currentWeatherContainerEl.append(currentCityEl, currentDateEl, currentWeatherIcon, currentTempEl, currentWindEl, currentHumidityEl, currentUviEl);
+    currentWeatherHalf1El.append(currentDateEl, currentWeatherIcon);
+    currentWeatherHalf2El.append(currentTempEl, currentWindEl, currentHumidityEl, currentUviEl);
+    currentWeatherContainerEl.appendChild(currentCityEl)
+    currentWeatherHalContainerEl.appendChild(currentWeatherHalf1El);
+    currentWeatherHalContainerEl.appendChild(currentWeatherHalf2El);
+    currentWeatherContainerEl.appendChild(currentWeatherHalContainerEl);
     mainContentEl.appendChild(currentWeatherContainerEl);
     // Color code the background of the UVI with EPA levels and color codes
     if (uviNum < 3.0) {
