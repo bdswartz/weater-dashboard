@@ -125,44 +125,44 @@ var getWeatherData = function(cityObj) {
 var displayCurrentWeather = function(weatherData,city) {
     mainContentEl.innerHTML = "";
     // Build current weather conditions icon request url
-    var currentWeatherContainerEl = document.createElement("div");
-    var currentWeatherHalContainerEl = document.createElement("div")
-    currentWeatherHalContainerEl.className = "half-container"
-    var currentWeatherHalf1El = document.createElement("div");
-    currentWeatherHalf1El.className = "current-half";
-    var currentWeatherHalf2El = document.createElement("div");
-    currentWeatherHalf2El.className = "current-half";
-    currentWeatherContainerEl.className = "current-weather";
-    var currentCityEl = document.createElement("h2");
-    currentCityEl.className = "city-display";
-    currentCityEl.textContent = city.Name;
+    var currWeatherContEl = document.createElement("div");
+    currWeatherContEl.className = "current-weather";
+    var currWeatherInfoEl = document.createElement("div")
+    currWeatherInfoEl.className = "half-container"
+    var currWeatherHeadBlockEl = document.createElement("div");
+    currWeatherHeadBlockEl.className = "current-half";
+    var currWeatherInfoBlockEl = document.createElement("div");
+    currWeatherInfoBlockEl.className = "current-half";
+    var currCityEl = document.createElement("h2");
+    currCityEl.className = "city-display";
+    currCityEl.textContent = city.Name;
     var date = dateConvert(weatherData.current.dt);
-    var currentDateEl = document.createElement("h3");
-    currentDateEl.textContent = date.Month + " " + date.Date + ", " + date.Year;
-    var currentWeatherIcon = document.createElement("img");
+    var currDateEl = document.createElement("h3");
+    currDateEl.textContent = date.Month + " " + date.Date + ", " + date.Year;
+    var currWeatherIcon = document.createElement("img");
     iconApiUrl = "https://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png";
     // Create icon and update weather data display element
-    currentWeatherIcon.src = iconApiUrl;
-    var currentTempEl = document.createElement("p");
-    currentTempEl.className = "current-data"
-    // currentTempEl.textContent = "Temp:  " + weatherData.current.temp + " F";
-    currentTempEl.innerHTML = "<span>Temp:  </span><span id='currentTemp'>" + weatherData.current.temp + " F</span>";
-    var currentWindEl = document.createElement("p");
-    // currentWindEl.textContent = "Wind:  " + weatherData.current.wind_speed + " mph";
-    currentWindEl.innerHTML = "<span>Wind:  </span><span id='currentWind'>" + weatherData.current.wind_speed + " mph</span>";
-    var currentHumidityEl = document.createElement("p");
-    // currentHumidityEl.textContent = "Humidity:  " + weatherData.current.humidity + " %";
-    currentHumidityEl.innerHTML = "<span>Humidity:  </span><span id='currentHumid'>" + weatherData.current.humidity + " %</span>";
-    var currentUviEl = document.createElement("div");
+    currWeatherIcon.src = iconApiUrl;
+    var currTempEl = document.createElement("p");
+    currTempEl.className = "current-data"
+    // currTempEl.textContent = "Temp:  " + weatherData.current.temp + " F";
+    currTempEl.innerHTML = "<span>Temp:  </span><span id='currentTemp'>" + weatherData.current.temp + " F</span>";
+    var currWindEl = document.createElement("p");
+    // currWindEl.textContent = "Wind:  " + weatherData.current.wind_speed + " mph";
+    currWindEl.innerHTML = "<span>Wind:  </span><span id='currentWind'>" + weatherData.current.wind_speed + " mph</span>";
+    var currHumidEl = document.createElement("p");
+    // currHumidEl.textContent = "Humidity:  " + weatherData.current.humidity + " %";
+    currHumidEl.innerHTML = "<span>Humidity:  </span><span id='currentHumid'>" + weatherData.current.humidity + " %</span>";
+    var currUviEl = document.createElement("div");
     uviNum = parseFloat(weatherData.current.uvi);
-    currentUviEl.innerHTML = "<span>UV Index:  </span><span id='currentUv'>" + uviNum + "</span>";
-    currentWeatherHalf1El.append(currentDateEl, currentWeatherIcon);
-    currentWeatherHalf2El.append(currentTempEl, currentWindEl, currentHumidityEl, currentUviEl);
-    currentWeatherContainerEl.appendChild(currentCityEl)
-    currentWeatherHalContainerEl.appendChild(currentWeatherHalf1El);
-    currentWeatherHalContainerEl.appendChild(currentWeatherHalf2El);
-    currentWeatherContainerEl.appendChild(currentWeatherHalContainerEl);
-    mainContentEl.appendChild(currentWeatherContainerEl);
+    currUviEl.innerHTML = "<span>UV Index:  </span><span id='currentUv'>" + uviNum + "</span>";
+    currWeatherHeadBlockEl.append(currDateEl, currWeatherIcon);
+    currWeatherInfoBlockEl.append(currTempEl, currWindEl, currHumidEl, currUviEl);
+    currWeatherContEl.appendChild(currCityEl)
+    currWeatherInfoEl.appendChild(currWeatherHeadBlockEl);
+    currWeatherInfoEl.appendChild(currWeatherInfoBlockEl);
+    currWeatherContEl.appendChild(currWeatherInfoEl);
+    mainContentEl.appendChild(currWeatherContEl);
     // Color code the background of the UVI with EPA levels and color codes
     if (uviNum < 3.0) {
         document.querySelector("#currentUv").setAttribute("style", "background-color: rgb(0, 252, 0); color: black;");
@@ -197,6 +197,10 @@ var buildForecast = function(data) {
         var date = dateConvert(data.daily[index].dt);
         var forecastCardEl = document.createElement("div");
         forecastCardEl.className = "day-card";
+        var foreCardHeadEl = document.createElement("div");
+        foreCardHeadEl.className = "forecast-head";
+        var foreCardInfoEl = document.createElement("div");
+        foreCardInfoEl.className = "forecast-info";
         var forecastDateEl = document.createElement("h4");
         forecastDateEl.textContent = date.Day;
         var forecastIconEl = document.createElement("img");
@@ -208,12 +212,16 @@ var buildForecast = function(data) {
         var forecastHumidityEl = document.createElement("p");
         forecastHumidityEl.textContent = "Humidity:     " + data.daily[index].humidity + " %";
         // append the weather data to the weather card
-        forecastCardEl.appendChild(forecastDateEl);
-        forecastCardEl.appendChild(forecastIconEl);
-        forecastCardEl.appendChild(forecastTempEl);
-        forecastCardEl.appendChild(forecastWindEl);
-        forecastCardEl.appendChild(forecastHumidityEl);
+        foreCardHeadEl.appendChild(forecastDateEl);
+        foreCardHeadEl.appendChild(forecastIconEl);
+        console.log(foreCardHeadEl);
+        console.log(foreCardInfoEl);
+        foreCardInfoEl.appendChild(forecastTempEl);
+        foreCardInfoEl.appendChild(forecastWindEl);
+        foreCardInfoEl.appendChild(forecastHumidityEl);
         // Append daily weather card to the container
+        forecastCardEl.appendChild(foreCardHeadEl);
+        forecastCardEl.appendChild(foreCardInfoEl);
         dayCardContainerEl.appendChild(forecastCardEl);
     }
 };
