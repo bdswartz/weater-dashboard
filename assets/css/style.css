@@ -83,7 +83,6 @@ p {
 }
 .current-half {
     flex: 1;
-    justify-content: ;
 }
 .current-weather h2 {
     font-weight: bold;

@@ -315,7 +315,7 @@ if (navigator.geolocation) {
     var options = {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 0
+        maximumAge: 10000
       };
 
     function success(position) {
