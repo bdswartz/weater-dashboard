@@ -101,7 +101,7 @@ var getCity = function() {
 var getCityPosition = function(geoLat,geoLong) {
     console.log(geoLat);
     console.log(geoLong);
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/reverse?lat=" + geoLat + "&lon=" + geoLong + "&limit=1&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/geo/1.0/reverse?lat=" + geoLat + "&lon=" + geoLong + "&limit=1&appid=" + apiKey;
     fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
