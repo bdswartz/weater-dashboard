@@ -25,22 +25,18 @@ var monthOfYear = [
 var cityHistoryObj = [{}];
 var apiKey = "d46c028b6162e14973f53abc548772fa";
 
-var uponLoad = function() {
+var pullHistory = function() {
     // if no local storage, need to get user input right away
     cityHistoryObj = JSON.parse(localStorage.getItem("cityhistory"));
-    updateCityHistory(cityHistoryObj);
-    // if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(showPosition);
-    //   } else {
-    //     x.innerHTML = "Geolocation is not supported by this browser.";
-    //   }
-    getWeatherData(cityHistoryObj[0]);
+    // updateCityDisplay(cityHistoryObj);
+    // getWeatherData(cityHistoryObj[0]);
 }
 
 var getCity = function() {
     event.preventDefault();
     var userInput = document.querySelector("#city-search-input").value;
     document.querySelector("#city-search-input").value = "";
+    // If the user enters a valid US Zip Code, perform a search for city, Lat, and Long
     if (isValidUSZip(userInput)) {
     apiZipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + userInput + ",US&appid=" + apiKey;
     fetch(apiZipUrl).then(function(response) {
@@ -49,18 +45,20 @@ var getCity = function() {
             response.json().then(function(data) {
                 // pass response data to display function
                 var cityObj = {Name: data.name, Lat: data.lat, Long: data.lon};
-                // if the city is already in history, remove it and move it to index 0
-                for (var removeIndex = 0; removeIndex < cityHistoryObj.length; removeIndex++) {
-                    if (cityObj.Name == cityHistoryObj[removeIndex].Name) {
-                        cityHistoryObj.splice(removeIndex,1);
-                    };
-                };
-                cityHistoryObj.unshift(cityObj);
-                cityHistoryObj = cityHistoryObj.slice(0,10);
-                localStorage.setItem("cityhistory", JSON.stringify(cityHistoryObj));
-                updateCityHistory(cityHistoryObj);
+                // // if the city is already in history, remove it and move it to index 0
+                // for (var removeIndex = 0; removeIndex < cityHistoryObj.length; removeIndex++) {
+                //     if (cityObj.Name == cityHistoryObj[removeIndex].Name) {
+                //         cityHistoryObj.splice(removeIndex,1);
+                //     };
+                // };
+                // // Insert new city data in the 0 index position
+                // cityHistoryObj.unshift(cityObj);
+                // // Trim the city data object to only keep the most recent 10 in memory
+                // cityHistoryObj = cityHistoryObj.slice(0,10);
+                // localStorage.setItem("cityhistory", JSON.stringify(cityHistoryObj));
+                updateCityHistory(cityObj);
+                updateCityDisplay(cityHistoryObj);
                 getWeatherData(cityObj);
-            // check if api has paginated issues  
             }
         )}
             else {
@@ -88,7 +86,7 @@ var getCity = function() {
                     cityHistoryObj.unshift(cityObj);
                     cityHistoryObj = cityHistoryObj.slice(0,10);
                     localStorage.setItem("cityhistory", JSON.stringify(cityHistoryObj));
-                    updateCityHistory(cityHistoryObj);
+                    updateCityDisplay();
                     getWeatherData(cityObj);
                 // check if api has paginated issues  
                 }
@@ -100,8 +98,27 @@ var getCity = function() {
     };
 };
 
+var getCityPosition = function(geoLat,geoLong) {
+    console.log(geoLat);
+    console.log(geoLong);
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/reverse?lat=" + geoLat + "&lon=" + geoLong + "&limit=1&appid=" + apiKey;
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        var cityObj = {Name: data[0].name, Lat: data[0].lat, Long: data[0].lon};
+        updateCityHistory(cityObj);
+        updateCityDisplay();
+        getWeatherData(cityObj);
+    })
+   .catch((error) => {
+    console.log(error);
+   alert("Unable to connect to for city data");
+    });
+};
+
 var getWeatherData = function(cityObj) {
-    // Build api request url
+    // Build api request url with city data object information
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityObj.Lat + "&lon=" + cityObj.Long + "&exclude=minutely,hourly&appid=" + apiKey + "&units=imperial";
     fetch(apiUrl).then(function(response) {
         // request was successful
@@ -123,6 +140,7 @@ var getWeatherData = function(cityObj) {
   };
 
 var displayCurrentWeather = function(weatherData,city) {
+    // Clear the main content and build the current weather display elements
     mainContentEl.innerHTML = "";
     // Build current weather conditions icon request url
     var currWeatherContEl = document.createElement("div");
@@ -183,14 +201,17 @@ var displayCurrentWeather = function(weatherData,city) {
     };
     
 var buildForecast = function(data) {
+    // Build the 5 day forecast
     var extendedForecastEl = document.createElement("div");
     extendedForecastEl.className = "extended-forecast";
     var fiveDayHeaderEl = document.createElement("h3");
     fiveDayHeaderEl.textContent = "5-Day Forecast";
     var dayCardContainerEl = document.createElement("div");
     dayCardContainerEl.className = "day-card-container";
+    // Display the forecast section title
     extendedForecastEl.append(fiveDayHeaderEl,dayCardContainerEl);
     mainContentEl.appendChild(extendedForecastEl);
+    // Build the 5 day cards and display in the forecast section
     for (var index = 1; index<6; index++) {
         iconApiUrl = "https://openweathermap.org/img/wn/" + data.daily[index].weather[0].icon + "@2x.png";
         // Create the elements for the weather card
@@ -225,13 +246,27 @@ var buildForecast = function(data) {
         dayCardContainerEl.appendChild(forecastCardEl);
     }
 };
+var updateCityHistory = function(cityObj) {
+    // if the city is already in history, remove it and move it to index 0
+    for (var removeIndex = 0; removeIndex < cityHistoryObj.length; removeIndex++) {
+        if (cityObj.Name == cityHistoryObj[removeIndex].Name) {
+            cityHistoryObj.splice(removeIndex,1);
+        };
+    };
+    // Insert new city data in the 0 index position
+    cityHistoryObj.unshift(cityObj);
+    // Trim the city data object to only keep the most recent 10 in memory
+    cityHistoryObj = cityHistoryObj.slice(0,10);
+    localStorage.setItem("cityhistory", JSON.stringify(cityHistoryObj));
+};
 
-var updateCityHistory = function (cityHistoryObj) {
+var updateCityDisplay = function () {
     // find container and create list items for the city history
     var cityListEl = document.querySelector(".city-list");
     // clear old list out of container
     cityListEl.innerHTML = "";
-    for (index=0 ; index<cityHistoryObj.length ; index++) {
+    // Cycle through the city data and build the clickable city history list
+    for (let index=0 ; index<cityHistoryObj.length ; index++) {
         if (cityHistoryObj[index].Name) {
         var cityHistoryItemEl = document.createElement("li")
         cityHistoryItemEl.className = "city-item"
@@ -257,6 +292,7 @@ var dateConvert = function(date) {
     var dayDateObject = {Day: dayOfWeek[day], Month: monthOfYear[month], Date: date, Year: year};
     return dayDateObject;
 };
+// Function to check if user input is a zip code (5 or 9 digit format)
 function isValidUSZip(zipCode) {
     return /^\d{5}(-\d{4})?$/.test(zipCode);
  }
@@ -268,7 +304,34 @@ function isValidUSZip(zipCode) {
       var cityChoiceObj = cityHistoryObj.splice(index,1);
       cityHistoryObj.unshift(cityChoiceObj[0]);
       getWeatherData(cityChoiceObj[0]);
-      updateCityHistory(cityHistoryObj);
+      updateCityDisplay();
+      updateCityHistory(cityChoiceObj[0]);
   });
-  if (localStorage.getItem("cityhistory")) {
-      uponLoad();};
+
+if (localStorage.getItem("cityhistory")) {
+      pullHistory();};
+
+if (navigator.geolocation) {
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      };
+
+    function success(position) {
+    var geoLat = position.coords.latitude;
+    var geoLong = position.coords.longitude;
+    getCityPosition(geoLat,geoLong);
+    };
+
+    function error(err) {
+        alert(err);
+        updateCityDisplay();
+        getWeatherData(cityHistoryObj[0]);
+    };
+    navigator.geolocation.getCurrentPosition(success,error,options);
+    }
+    else {
+        updateCityDisplay();
+        getWeatherData(cityHistoryObj[0]);
+    };
