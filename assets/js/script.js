@@ -321,6 +321,8 @@ if (navigator.geolocation) {
     function success(position) {
     var geoLat = position.coords.latitude;
     var geoLong = position.coords.longitude;
+    alert(geoLat);
+    alert(geoLong);
     getCityPosition(geoLat,geoLong);
     };
 
