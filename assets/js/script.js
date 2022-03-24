@@ -99,13 +99,10 @@ var getCity = function() {
 };
 
 var getCityPosition = function(geoLat,geoLong) {
-    console.log(geoLat);
-    console.log(geoLong);
     var apiUrl = "https://api.openweathermap.org/geo/1.0/reverse?lat=" + geoLat + "&lon=" + geoLong + "&limit=1&appid=" + apiKey;
     fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         var cityObj = {Name: data[0].name, Lat: data[0].lat, Long: data[0].lon};
         updateCityHistory(cityObj);
         updateCityDisplay();
@@ -235,8 +232,6 @@ var buildForecast = function(data) {
         // append the weather data to the weather card
         foreCardHeadEl.appendChild(forecastDateEl);
         foreCardHeadEl.appendChild(forecastIconEl);
-        console.log(foreCardHeadEl);
-        console.log(foreCardInfoEl);
         foreCardInfoEl.appendChild(forecastTempEl);
         foreCardInfoEl.appendChild(forecastWindEl);
         foreCardInfoEl.appendChild(forecastHumidityEl);
@@ -321,13 +316,11 @@ if (navigator.geolocation) {
     function success(position) {
     var geoLat = position.coords.latitude;
     var geoLong = position.coords.longitude;
-    alert(geoLat);
-    alert(geoLong);
     getCityPosition(geoLat,geoLong);
     };
 
     function error(err) {
-        alert(err);
+        console.log(err.message);
         updateCityDisplay();
         getWeatherData(cityHistoryObj[0]);
     };
